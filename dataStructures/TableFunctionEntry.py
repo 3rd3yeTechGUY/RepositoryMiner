@@ -1,69 +1,45 @@
+from Utils.CSV import build_csv_from_array
+
+
 class TableFunctionEntry:
-    def __init__(self, commit, modification, method,
+    def __init__(self, commit, modification, method, stmt_count, author_metrics, decl_metrics, condition_metrics
                  ):
-        self.__commit = commit
-        self.__modification = modification
-        self.__method = method
-        self.__file_name = self.__modification.filename
+        self.commit = commit
+        self.modification = modification
+        self.method = method
+        self.file_name = self.modification.filename
+        self.fan_in = method.fan_in
+        self.fan_out = method.fan_out
+        self.local_variables = method.nloc
+        self.parameters = len(method.parameters)
+        self.comment_to_code_ratio = method.comment_to_code_ration
+        self.count_path = method.path_count
+        self.complexity = method.complexity
+        self.exec_statements = method.exec_statements
+        self.max_nesting = method.top_nesting_level
+        self.method_histories = stmt_count["method_histories"]
+        self.authors = author_metrics
+        self.stmt_added = stmt_count["sum_statement_added"]
+        self.max_stmt_added = stmt_count["max_statement_added"]
+        self.avg_stmt_added = stmt_count["average_statement_added"]
+        self.stmt_deleted = stmt_count["sum_statement_deleted"]
+        self.max_stmt_deleted = stmt_count["max_statement_deleted"]
+        self.avg_stmt_deleted = stmt_count["average_statement_deleted"]
+        self.churn = stmt_count["churn"]
+        self.max_churn = stmt_count["max_churn"]
+        self.avg_churn = stmt_count["average_churn"]
+        self.decl = decl_metrics
+        self.cond = condition_metrics["condition_changes"]
+        self.else_added = condition_metrics["else_added"]
+        self.else_deleted = condition_metrics["else_removed"]
 
     def get_as_csv(self):
-        return "{},{},{},{},{},{},{},{}".format(self.get_commit_hash(), self.__file_name, self.get_method_name(),
-                                             self.get_file_changes_upto_now(), self.get_fan_in(), self.get_fan_out(),
-                                             self.get_complexity(), self.get_parameters())
+        return build_csv_from_array(self.get_array_of_metrics())
 
-    def get_fan_in(self):
-        return self.__method.fan_in
-
-    def get_fan_out(self):
-        return self.__method.fan_out
-
-    def get_complexity(self):
-        return self.__method.complexity
-
-    def get_parameters(self):
-        return self.__method.parameters
-
-    def get_file_changes_upto_now(self):
-        return self.__file_changes_upto_now_to_file
-
-    def get_commit_hash(self):
-        return self.__commit.hash
-
-    def get_method(self):
-        return self.__method
-
-    def get_method_name(self):
-        return self.__method.name
-
-    def get_file_name(self):
-        return self.__modification.filename
-
-    def get_file_changes_upto_now_to_file(self):
-        return self.__file_changes_upto_now_to_file
-
-    def get_lines_added_in_file_normalized(self):
-        return self.__normalize(self.get_lines_added_in_file_absolute())
-
-    def get_lines_added_in_file_absolute(self):
-        return self.__modification.added
-
-    def get_lines_deleted_in_file_absolute(self):
-        return self.__modification.removed
-
-    def get_lines_deleted_in_file_normalized(self):
-        return self.__normalize(self.get_lines_deleted_in_file_absolute())
-
-    def get_lines_of_file_before(self):
-        return self.__modification.nloc;
-
-    def get_percentage_lines_authored_in_project(self):
-        # TODO implement percentage lines authored
-        return -1
-
-    def get_number_of_unique_changes(self):
-        return -1
-        # TODO implement number of unique changes
-
-    def __normalize(self, number):
-        # TODO Add implementation of Normalize
-        return number;
+    def get_array_of_metrics(self):
+        return [self.commit.hash, self.file_name, self.method.long_name, self.fan_in, self.fan_out,
+                self.local_variables,
+                self.parameters, self.comment_to_code_ratio, self.count_path, self.complexity, self.exec_statements,
+                self.max_nesting, self.method_histories, self.authors, self.stmt_added, self.max_stmt_added,
+                self.avg_stmt_added, self.stmt_deleted, self.max_stmt_deleted, self.avg_stmt_deleted, self.churn,
+                self.max_churn, self.avg_churn, self.decl, self.cond, self.else_added, self.else_deleted]
