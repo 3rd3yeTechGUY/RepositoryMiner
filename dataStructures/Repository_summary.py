@@ -6,9 +6,9 @@ class RepositorySummary:
         self.__commits = []
         self.__table_function_etries = []
         self.__number_of_changes_to_files = {}
+        self.methods = {}
 
-    def add_commit(self, commit, method_statement_count, method_author_count, method_declaration_count,
-                   method_condition_metrcis):
+    def add_commit(self, commit):
         self.__commits.append(commit)
         for modification in commit.modifications:
             for method in modification.methods:
