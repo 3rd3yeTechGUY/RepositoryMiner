@@ -8,18 +8,8 @@ class RepositorySummary:
         self.__number_of_changes_to_files = {}
         self.methods = {}
 
-    def add_commit(self, commit):
-        self.__commits.append(commit)
-        for modification in commit.modifications:
-            for method in modification.methods:
-                method_name = modification.filename + ":" + method.long_name
-                statement_metrics = method_statement_count[method_name]
-                author_metrics = method_author_count.get(method_name, 0)
-                decl_metrics = method_declaration_count.get(method_name, 0)
-                condition_metrics = method_condition_metrcis.get(method_name)
-                self.__table_function_etries.append(
-                    TableFunctionEntry(commit, modification, method, statement_metrics, author_metrics, decl_metrics,
-                                       condition_metrics))
+    def add_method(self, method_dto, metrics):
+        self.__table_function_etries.append(TableFunctionEntry(method_dto, metrics))
 
     def __update_number_changes_files(self, file_list):
         for file in file_list:
