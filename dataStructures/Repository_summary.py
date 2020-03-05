@@ -10,7 +10,6 @@ class RepositorySummary:
     def add_commit(self, commit, method_statement_count, method_author_count, method_declaration_count,
                    method_condition_metrcis):
         self.__commits.append(commit)
-        print("Commit added: ", commit.hash)
         for modification in commit.modifications:
             for method in modification.methods:
                 method_name = modification.filename + ":" + method.long_name
@@ -39,3 +38,7 @@ class RepositorySummary:
 
     def get_table(self):
         return self.__table_function_etries
+
+    def get_table_entries(self):
+        for table_function_entry in self.__table_function_etries:
+            yield table_function_entry
