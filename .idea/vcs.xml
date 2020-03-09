@@ -3,6 +3,11 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/pydriller" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/test-repos/bug-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/test-repos/method-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/test-repos/method-test3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/test-repos/method-test4" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/test-repos/method-test5" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/test-repos/test-repo" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/test-repos/test-repo1" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/test-repos/test-repo1/pydriller" vcs="Git" />
